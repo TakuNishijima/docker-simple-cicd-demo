@@ -44,7 +44,7 @@ jobs:
         # Dockerイメージのビルド
         # web配下のDockerfile、productionイメージのビルド(名前を指定)、REACT_APP_API_SERVER変数に/apiを格納
         run: |
-          docker image build --target production -t temp_web_image_name:latest --building-arg REACT_APP_API_SERVER=/api .
+          docker image build --target production -t temp_web_image_name:latest --build-arg REACT_APP_API_SERVER=/api .
       # AWSにログイン 
       - name: Configure AWS credentials
         # AWSログイン用パッケージ的なの使う宣言
