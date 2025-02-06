@@ -8,7 +8,9 @@ COPY . /workspace
 # gradleビルドのためにワーキングディレクトリを/workspaceに指定
 WORKDIR /workspace
 # gradleファイルのビルド
-# gradlewをビルドするとき同時にテストもしてくれてる
+# gradlewをビルドするとき同時にテストもしてくれてる[
+# gradlewの実行には実行権限の付与が必要
+RUN chmod +x ./gradlew
 RUN ./gradlew build
 
 # production
