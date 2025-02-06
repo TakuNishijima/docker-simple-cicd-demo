@@ -109,7 +109,7 @@ jobs:
           # secretsで定義したリポジトリを入れる
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_API_SERVER_REPOSITORY }}
         run: |
-          docker image tag temp_web_image_name:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker image tag temp_api_image_name:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
   # デプロイ
   deploy:
