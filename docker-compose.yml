@@ -1,0 +1,39 @@
+# バージョンを入れる
+version: '3.9'
+# 起動するコンテナの詳細情報を入れる
+services:
+  # 1. apiコンテナ
+  api:
+  # コンテナ名を明示的に宣言
+    container_name: api
+    # ビルドコンテキストパスを入れる(./api配下のリソースをビルドする)
+    build: ./api
+    # 接続ポートの宣言
+    ports:
+      - 8080:8080
+    # 標準入出力先のデバイスを用意してあげることで、コンテナを継続させる
+    tty: true
+    # ボリューム領域の設定(今回はバインドマウントでローカルホスト上./apiと/workspaceを接続、早めの通信にしたいのでcacheもいれる)
+    volumes:
+      - type: bind
+        source: ./api
+        target: /workspace
+  
+  web:
+    container_name: web
+    # ビルドするコンテキストパスとターゲットとなるイメージを指定(Dockerfile内baseイメージを指定)
+    build: 
+      context: ./web
+      target: base
+    ports:
+      - 3000:3000
+    environment: 
+     - REACT_APP_API_SERVER=http://localhost:8080/api
+    tty: true
+    volumes:
+      - type: bind
+        source: ./web
+        target: /workspace
+    # 依存関係を入れる
+    depends_on:
+      - api
